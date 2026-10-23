@@ -444,7 +444,7 @@ create policy verif_update on public.verification_requests for update to authent
 -- Tutores legales
 create policy guardian_select on public.guardian_relationships for select to authenticated
   using (minor_id = auth.uid() or guardian_id = auth.uid() or public.is_admin()
-         or guardian_email = (auth.jwt() ->> 'email')::citext);
+         or guardian_email = (auth.jwt() ->> 'email')::extensions.citext);
 create policy guardian_insert on public.guardian_relationships for insert to authenticated
   with check (minor_id = auth.uid() and status = 'pending' and guardian_id is null);
 create policy guardian_delete on public.guardian_relationships for delete to authenticated

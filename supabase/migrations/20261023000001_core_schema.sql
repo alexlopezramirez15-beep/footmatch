@@ -4,8 +4,10 @@
 -- de autorización viven en 20261023000002_security.sql.
 -- =====================================================================
 
-create extension if not exists pgcrypto;
-create extension if not exists citext;
+-- En Supabase las extensiones viven en el esquema "extensions", nunca en public.
+create schema if not exists extensions;
+create extension if not exists pgcrypto with schema extensions;
+create extension if not exists citext with schema extensions;
 
 -- ---------------------------------------------------------------------
 -- Tipos
@@ -607,7 +609,7 @@ create table public.guardian_relationships (
   id uuid primary key default gen_random_uuid(),
   minor_id uuid not null references public.profiles(id) on delete cascade,
   guardian_id uuid references public.profiles(id) on delete cascade,
-  guardian_email citext not null,
+  guardian_email extensions.citext not null,
   guardian_name text,
   relationship text check (relationship in ('mother','father','legal_guardian','other')),
   status public.guardian_status not null default 'pending',

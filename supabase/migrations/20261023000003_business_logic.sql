@@ -663,6 +663,8 @@ begin
   perform public.log_audit('demo.purged', 'system', null, jsonb_build_object('organizations', n_orgs, 'users', n_users));
   return jsonb_build_object('organizations', n_orgs, 'users', n_users);
 end $$;
+-- Sin sesión (auth.uid() nulo) sólo puede ejecutarla el propietario desde SQL, nunca la API anónima.
+revoke execute on function public.purge_demo_data() from public, anon;
 
 -- Caducidad de oportunidades (programable con pg_cron: select public.expire_opportunities();)
 create or replace function public.expire_opportunities() returns int
