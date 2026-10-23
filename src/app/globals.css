@@ -1,26 +1,358 @@
 @import "tailwindcss";
 
+/* =====================================================================
+   FOOTMATCH GLASS DESIGN SYSTEM · tokens
+   Todos los colores, materiales, radios, sombras y curvas de animación
+   se definen aquí. Cambiar un token cambia toda la app.
+   ===================================================================== */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  /* Paleta · Light */
+  --fm-bg: #f6f8fa;
+  --fm-bg-2: #eef2f5;
+  --fm-surface: #ffffff;
+  --fm-text: #111827;
+  --fm-text-2: #6b7280;
+  --fm-text-3: #9ca3af;
+  --fm-accent: #10b981;
+  --fm-accent-strong: #047857;
+  --fm-accent-contrast: #ffffff;
+  --fm-ambient-1: #dcecf7; /* ice blue */
+  --fm-ambient-2: #d8f7e8; /* soft mint */
+  --fm-ambient-3: #e8ecf2; /* pearl */
+  --fm-info: #2563eb;
+  --fm-warn: #d97706;
+  --fm-danger: #dc2626;
+  --fm-hairline: rgb(17 24 39 / 0.08);
+
+  /* Materiales (relleno, borde, desenfoque, saturación) */
+  --glass-ultra-bg: rgb(255 255 255 / 0.28);
+  --glass-thin-bg: rgb(255 255 255 / 0.45);
+  --glass-regular-bg: rgb(255 255 255 / 0.58);
+  --glass-elevated-bg: rgb(255 255 255 / 0.72);
+  --glass-dark-bg: rgb(17 24 39 / 0.55);
+  --glass-solid-bg: #ffffff;
+  --glass-border: rgb(255 255 255 / 0.7);
+  --glass-border-soft: rgb(255 255 255 / 0.45);
+  --glass-edge: rgb(17 24 39 / 0.06);
+  --glass-highlight: rgb(255 255 255 / 0.85);
+  --glass-highlight-soft: rgb(255 255 255 / 0.35);
+  --glass-inner-shade: rgb(17 24 39 / 0.04);
+  --glass-blur-ultra: 10px;
+  --glass-blur-thin: 16px;
+  --glass-blur-regular: 24px;
+  --glass-blur-elevated: 36px;
+  --glass-saturate: 180%;
+
+  /* Sombras multicapa */
+  --shadow-1: 0 1px 2px rgb(15 23 42 / 0.04), 0 2px 8px rgb(15 23 42 / 0.04);
+  --shadow-2: 0 1px 2px rgb(15 23 42 / 0.05), 0 8px 24px rgb(15 23 42 / 0.07);
+  --shadow-3: 0 2px 6px rgb(15 23 42 / 0.06), 0 18px 48px rgb(15 23 42 / 0.12);
+  --shadow-4: 0 4px 12px rgb(15 23 42 / 0.08), 0 30px 80px rgb(15 23 42 / 0.18);
+  --shadow-glow: 0 0 0 1px rgb(16 185 129 / 0.25), 0 8px 28px rgb(16 185 129 / 0.35);
+
+  /* Radios */
+  --radius-xs: 10px;
+  --radius-input: 16px;
+  --radius-md: 22px;
+  --radius-lg: 30px;
+  --radius-xl: 36px;
+  --radius-pill: 999px;
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 380ms;
+
+  /* Layout */
+  --tabbar-h: 68px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --content-bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 28px);
+}
+
+/* Paleta · Dark */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --fm-bg: #080b10;
+  --fm-bg-2: #10151d;
+  --fm-surface: #121821;
+  --fm-text: #f9fafb;
+  --fm-text-2: #a1a1aa;
+  --fm-text-3: #71717a;
+  --fm-accent: #34d399;
+  --fm-accent-strong: #059669;
+  --fm-accent-contrast: #04140e;
+  --fm-ambient-1: #15293d; /* ambient blue */
+  --fm-ambient-2: #11342b; /* ambient green */
+  --fm-ambient-3: #161b24;
+  --fm-info: #60a5fa;
+  --fm-warn: #fbbf24;
+  --fm-danger: #f87171;
+  --fm-hairline: rgb(255 255 255 / 0.08);
+
+  --glass-ultra-bg: rgb(22 28 38 / 0.28);
+  --glass-thin-bg: rgb(22 28 38 / 0.42);
+  --glass-regular-bg: rgb(24 30 41 / 0.55);
+  --glass-elevated-bg: rgb(26 33 45 / 0.72);
+  --glass-dark-bg: rgb(4 6 10 / 0.6);
+  --glass-solid-bg: #121821;
+  --glass-border: rgb(255 255 255 / 0.12);
+  --glass-border-soft: rgb(255 255 255 / 0.07);
+  --glass-edge: rgb(0 0 0 / 0.4);
+  --glass-highlight: rgb(255 255 255 / 0.16);
+  --glass-highlight-soft: rgb(255 255 255 / 0.06);
+  --glass-inner-shade: rgb(0 0 0 / 0.25);
+  --glass-saturate: 150%;
+
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 8px rgb(0 0 0 / 0.25);
+  --shadow-2: 0 1px 2px rgb(0 0 0 / 0.35), 0 8px 24px rgb(0 0 0 / 0.35);
+  --shadow-3: 0 2px 6px rgb(0 0 0 / 0.4), 0 18px 48px rgb(0 0 0 / 0.5);
+  --shadow-4: 0 4px 12px rgb(0 0 0 / 0.45), 0 30px 80px rgb(0 0 0 / 0.6);
+  --shadow-glow: 0 0 0 1px rgb(52 211 153 / 0.3), 0 8px 32px rgb(52 211 153 / 0.3);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--fm-bg);
+  --color-bg-2: var(--fm-bg-2);
+  --color-surface: var(--fm-surface);
+  --color-ink: var(--fm-text);
+  --color-ink-2: var(--fm-text-2);
+  --color-ink-3: var(--fm-text-3);
+  --color-accent: var(--fm-accent);
+  --color-accent-strong: var(--fm-accent-strong);
+  --color-accent-contrast: var(--fm-accent-contrast);
+  --color-info: var(--fm-info);
+  --color-warn: var(--fm-warn);
+  --color-danger: var(--fm-danger);
+  --color-hairline: var(--fm-hairline);
+  --radius-input: var(--radius-input);
+  --radius-card: var(--radius-md);
+  --radius-panel: var(--radius-lg);
+  --radius-sheet: var(--radius-xl);
+  --shadow-glass-1: var(--shadow-1);
+  --shadow-glass-2: var(--shadow-2);
+  --shadow-glass-3: var(--shadow-3);
+  --shadow-glass-4: var(--shadow-4);
+  --shadow-glow: var(--shadow-glow);
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", var(--font-geist-sans), Inter, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-geist-sans), Inter, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", var(--font-geist-mono), monospace;
+  --ease-fm: var(--ease-out);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =====================================================================
+   Base
+   ===================================================================== */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+body {
+  background: var(--fm-bg);
+  color: var(--fm-text);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  overscroll-behavior-y: none;
+}
+::selection { background: color-mix(in srgb, var(--fm-accent) 30%, transparent); }
+
+:focus-visible {
+  outline: 2px solid var(--fm-accent);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+.text-balance { text-wrap: balance; }
+
+/* Tipografía */
+.fm-display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; }
+.fm-title { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; }
+.fm-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fm-text-2); }
+.fm-number { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+
+/* =====================================================================
+   Fondo ambiental: gradientes radiales + formas desenfocadas + grano
+   ===================================================================== */
+.fm-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 10% 0%, var(--fm-ambient-1) 0%, transparent 70%),
+    radial-gradient(55% 40% at 95% 15%, var(--fm-ambient-2) 0%, transparent 70%),
+    radial-gradient(70% 50% at 50% 100%, var(--fm-ambient-3) 0%, transparent 75%),
+    var(--fm-bg);
+}
+.fm-ambient::before,
+.fm-ambient::after {
+  content: "";
+  position: absolute;
+  width: 55vmax;
+  height: 55vmax;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.fm-ambient::before {
+  background: radial-gradient(circle, color-mix(in srgb, var(--fm-accent) 28%, transparent), transparent 65%);
+  top: -18vmax;
+  right: -14vmax;
+  animation: fm-drift-a 28s var(--ease-out) infinite alternate;
+}
+.fm-ambient::after {
+  background: radial-gradient(circle, color-mix(in srgb, var(--fm-info) 18%, transparent), transparent 65%);
+  bottom: -22vmax;
+  left: -18vmax;
+  animation: fm-drift-b 34s var(--ease-out) infinite alternate;
+}
+.fm-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+@keyframes fm-drift-a { to { transform: translate3d(-6vmax, 8vmax, 0) scale(1.08); } }
+@keyframes fm-drift-b { to { transform: translate3d(8vmax, -6vmax, 0) scale(1.1); } }
+
+/* Posición por defecto en capa: así absolute/fixed/sticky de Tailwind la sustituyen. */
+@layer components {
+  .glass { position: relative; }
+}
+
+/* =====================================================================
+   MATERIALES LIQUID GLASS
+   .glass + modificador de material. El reflejo superior (::before) y el
+   borde iluminado (::after) simulan grosor y refracción con capas CSS.
+   ===================================================================== */
+.glass {
+  --g-bg: var(--glass-regular-bg);
+  --g-blur: var(--glass-blur-regular);
+  --g-shadow: var(--shadow-2);
+  --g-border: var(--glass-border);
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, var(--glass-highlight-soft) 0%, transparent 38%, transparent 70%, var(--glass-inner-shade) 100%),
+    var(--g-bg);
+  -webkit-backdrop-filter: blur(var(--g-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--g-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--g-border);
+  box-shadow:
+    inset 0 1px 0 0 var(--glass-highlight),
+    inset 0 -1px 0 0 var(--glass-edge),
+    var(--g-shadow);
+}
+/* Brillo especular superior */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(120% 60% at 20% -10%, var(--glass-highlight-soft) 0%, transparent 55%),
+    linear-gradient(115deg, transparent 40%, color-mix(in srgb, var(--glass-highlight) 35%, transparent) 50%, transparent 60%);
+  opacity: 0.9;
+}
+/* Borde iluminado (refracción en el canto) */
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  padding: 1px;
+  background: linear-gradient(160deg, var(--glass-highlight) 0%, transparent 30%, transparent 70%, var(--glass-highlight-soft) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.glass-ultra-thin { --g-bg: var(--glass-ultra-bg); --g-blur: var(--glass-blur-ultra); --g-shadow: var(--shadow-1); --g-border: var(--glass-border-soft); }
+.glass-thin { --g-bg: var(--glass-thin-bg); --g-blur: var(--glass-blur-thin); --g-shadow: var(--shadow-1); }
+.glass-regular { --g-bg: var(--glass-regular-bg); --g-blur: var(--glass-blur-regular); --g-shadow: var(--shadow-2); }
+.glass-elevated { --g-bg: var(--glass-elevated-bg); --g-blur: var(--glass-blur-elevated); --g-shadow: var(--shadow-4); }
+.glass-dark { --g-bg: var(--glass-dark-bg); --g-blur: var(--glass-blur-regular); --g-shadow: var(--shadow-3); --g-border: rgb(255 255 255 / 0.14); color: #f9fafb; }
+.glass-tint-green { --g-bg: color-mix(in srgb, var(--fm-accent) 78%, transparent); --g-border: color-mix(in srgb, white 35%, var(--fm-accent)); color: var(--fm-accent-contrast); }
+.glass-tint-blue { --g-bg: color-mix(in srgb, var(--fm-info) 18%, var(--glass-regular-bg)); }
+.glass-tint-amber { --g-bg: color-mix(in srgb, var(--fm-warn) 18%, var(--glass-regular-bg)); }
+.glass-tint-red { --g-bg: color-mix(in srgb, var(--fm-danger) 18%, var(--glass-regular-bg)); }
+.surface-solid {
+  background: var(--glass-solid-bg);
+  border: 1px solid var(--fm-hairline);
+  box-shadow: var(--shadow-1);
+}
+
+/* Fallbacks: navegadores sin backdrop-filter o con transparencia reducida */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { --g-bg: var(--glass-solid-bg) !important; }
+  .glass-dark { --g-bg: #111827 !important; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass { -webkit-backdrop-filter: none; backdrop-filter: none; --g-bg: var(--glass-solid-bg) !important; }
+  .glass::before { display: none; }
+}
+/* Alto contraste: bordes más marcados */
+@media (prefers-contrast: more) {
+  .glass { --g-border: var(--fm-text-2) !important; }
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =====================================================================
+   Utilidades de app
+   ===================================================================== */
+.fm-safe-top { padding-top: max(var(--safe-top), 12px); }
+.fm-safe-bottom { padding-bottom: var(--content-bottom); }
+@media (min-width: 1024px) { .fm-safe-bottom { padding-bottom: 48px; } }
+
+.fm-scroll-fade {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+}
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Skeleton shimmer */
+.fm-skeleton {
+  background: linear-gradient(100deg, var(--fm-hairline) 20%, color-mix(in srgb, var(--fm-hairline) 40%, var(--glass-highlight-soft)) 40%, var(--fm-hairline) 60%);
+  background-size: 200% 100%;
+  animation: fm-shimmer 1.4s linear infinite;
+}
+@keyframes fm-shimmer { to { background-position: -200% 0; } }
+
+/* Gradiente inferior para fotografías */
+.fm-photo-scrim {
+  background: linear-gradient(180deg, transparent 35%, rgb(0 0 0 / 0.25) 55%, rgb(0 0 0 / 0.82) 100%);
+}
+
+/* Campo (pitch) decorativo para avatares sin foto */
+.fm-pitch {
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 18%, rgb(255 255 255 / 0.18) 18% 18.6%, transparent 18.6%),
+    linear-gradient(90deg, transparent 49.6%, rgb(255 255 255 / 0.18) 49.6% 50.4%, transparent 50.4%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.04) 0 10%, transparent 10% 20%),
+    linear-gradient(160deg, #0f766e, #065f46 55%, #022c22);
 }
