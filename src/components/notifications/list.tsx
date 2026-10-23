@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSyncedState } from "@/lib/hooks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Bell, BriefcaseBusiness, CalendarDays, CheckCheck, Heart, MessageCircle, ShieldCheck, Sparkles } from "lucide-react";
@@ -22,8 +23,7 @@ const ICONS: Record<string, React.ReactNode> = {
 export function NotificationList({ items }: { items: NotificationRow[] }) {
   const { t, f } = useI18n();
   const router = useRouter();
-  const [list, setList] = React.useState(items);
-  React.useEffect(() => setList(items), [items]);
+  const [list, setList] = useSyncedState(items);
   const unread = list.filter((n) => !n.read_at).length;
 
   const markAll = async () => {

@@ -59,7 +59,7 @@ export function LoginForm({ next, linkError }: { next?: string; linkError?: bool
       </form>
       <p className="mt-6 text-center text-sm text-ink-2">
         {t("auth.noAccount")}{" "}
-        <Link href="/register" className="font-semibold text-ink underline-offset-4 hover:underline">
+        <Link href={next && next !== "/home" ? `/register?next=${encodeURIComponent(next)}` : "/register"} className="font-semibold text-ink underline-offset-4 hover:underline">
           {t("auth.register")}
         </Link>
       </p>
@@ -67,7 +67,7 @@ export function LoginForm({ next, linkError }: { next?: string; linkError?: bool
   );
 }
 
-export function RegisterForm() {
+export function RegisterForm({ next }: { next?: string }) {
   const { t } = useI18n();
   const [state, action, pending] = useActionState<AuthState, FormData>(registerAction, undefined);
   const fe = state?.fieldErrors ?? {};
@@ -88,6 +88,7 @@ export function RegisterForm() {
     <Shell title={t("auth.registerTitle")} subtitle={t("auth.registerSubtitle")}>
       <form action={action} className="flex flex-col gap-4" noValidate>
         <FormError code={state?.error} />
+        {next ? <input type="hidden" name="next" value={next} /> : null}
         <GlassField label={t("auth.fullName")} htmlFor="full_name" error={fe.full_name ? t(fe.full_name) : null}>
           <GlassInput id="full_name" name="full_name" autoComplete="name" required leading={<UserRound className="size-4" />} invalid={!!fe.full_name} data-autofocus />
         </GlassField>
@@ -111,7 +112,7 @@ export function RegisterForm() {
       </form>
       <p className="mt-6 text-center text-sm text-ink-2">
         {t("auth.haveAccount")}{" "}
-        <Link href="/login" className="font-semibold text-ink underline-offset-4 hover:underline">{t("auth.login")}</Link>
+        <Link href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"} className="font-semibold text-ink underline-offset-4 hover:underline">{t("auth.login")}</Link>
       </p>
     </Shell>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSyncedState } from "@/lib/hooks";
 import Link from "next/link";
 import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, useTransform, type PanInfo } from "motion/react";
 import { Heart, Info, RotateCcw, SlidersHorizontal, Star, X, Compass, ArrowUpRight, MapPin, Users, CalendarDays } from "lucide-react";
@@ -23,10 +24,10 @@ type Decision = "like" | "pass";
 const SWIPE_X = 110;
 const SWIPE_V = 600;
 
-export function DiscoverDeck({ items, onOpenFilters, filtersActive }: { items: DeckItem[]; onOpenFilters?: () => void; filtersActive?: boolean }) {
+export function DiscoverDeck({ items, onOpenFilters }: { items: DeckItem[]; onOpenFilters?: () => void }) {
   const { t } = useI18n();
   const { push } = useToast();
-  const [queue, setQueue] = React.useState(items);
+  const [queue, setQueue] = useSyncedState(items);
   const [lastPass, setLastPass] = React.useState<{ item: DeckItem; interestId: string } | null>(null);
   const [detail, setDetail] = React.useState<DeckItem | null>(null);
   const [match, setMatch] = React.useState<MatchOverlayData | null>(null);
@@ -35,7 +36,6 @@ export function DiscoverDeck({ items, onOpenFilters, filtersActive }: { items: D
   const busy = React.useRef(false);
   const topControls = React.useRef<{ fling: (d: Decision) => void } | null>(null);
 
-  React.useEffect(() => setQueue(items), [items]);
 
   const decide = React.useCallback(
     async (item: DeckItem, decision: Decision) => {
@@ -63,7 +63,7 @@ export function DiscoverDeck({ items, onOpenFilters, filtersActive }: { items: D
         setMatch({ ...other, conversationId: res.data.conversationId });
       }
     },
-    [push, t],
+    [push, t, setQueue],
   );
 
   const undo = async () => {

@@ -6,12 +6,14 @@ import { isSupabaseConfigured } from "@/lib/supabase/env";
 
 export const metadata = { title: "Registro" };
 
-export default async function RegisterPage() {
-  if (await getSession()) redirect("/home");
+export default async function RegisterPage(props: PageProps<"/register">) {
+  const sp = await props.searchParams;
+  const next = typeof sp.next === "string" && sp.next.startsWith("/") && !sp.next.startsWith("//") ? sp.next : undefined;
+  if (await getSession()) redirect(next ?? "/home");
   return (
     <>
       {!isSupabaseConfigured ? <SetupNotice /> : null}
-      <RegisterForm />
+      <RegisterForm next={next} />
     </>
   );
 }

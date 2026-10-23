@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useOnChange } from "@/lib/hooks";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SlidersHorizontal } from "lucide-react";
 import { GlassNavbar } from "@/components/glass/navigation";
@@ -66,7 +67,7 @@ export function DiscoverView({
           </GlassField>
         </div>
       ) : null}
-      <DiscoverDeck items={items} onOpenFilters={() => setOpen(true)} filtersActive={count > 0} />
+      <DiscoverDeck items={items} onOpenFilters={() => setOpen(true)} />
       <FiltersSheet mode={mode} open={open} onClose={() => setOpen(false)} initial={filters} />
     </>
   );
@@ -79,9 +80,7 @@ function FiltersSheet({ mode, open, onClose, initial }: { mode: "player" | "orga
   const opts = useFootballOptions();
   const [f, setF] = React.useState<DiscoverFilters>(initial);
   const [saving, setSaving] = React.useState(false);
-  React.useEffect(() => {
-    if (open) setF(initial);
-  }, [open, initial]);
+  useOnChange(open, (o) => o && setF(initial));
   const set = <K extends keyof DiscoverFilters>(k: K, v: DiscoverFilters[K]) => setF((s) => ({ ...s, [k]: v }));
   const num = (v: string) => (v === "" ? null : Math.max(10, Math.min(50, Number(v))));
 

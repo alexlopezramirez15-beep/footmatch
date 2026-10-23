@@ -44,7 +44,7 @@ export async function createTrialAction(payload: unknown, applicationId?: string
   const parsed = trialSchema.safeParse(payload);
   if (!parsed.success) {
     const fieldErrors: Record<string, string> = {};
-    for (const i of parsed.error.issues) fieldErrors[String(i.path[0])] ??= i.message;
+    for (const i of parsed.error.issues) fieldErrors[String(i.path[0])] ??= ["range", "future", "after"].includes(i.message) ? i.message : "invalid";
     return { ok: false, error: "trials.invalid", fieldErrors };
   }
   const { session, m, supabase } = await orgMember();

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Film, MapPin, Ruler, Footprints, Trophy, Languages, Plane, Timer, ExternalLink, ShieldCheck } from "lucide-react";
 import { DemoBadge, GlassAvatar, GlassBadge, GlassCard, SectionHeader } from "@/components/glass/primitives";
 import { MatchPill, MatchReasons } from "@/components/cards/cards";

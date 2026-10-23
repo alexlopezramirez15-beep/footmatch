@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { ArrowRight, Bell, Briefcase, Compass, Heart, KanbanSquare, Plus, ShieldAlert, Sparkles, Users } from "lucide-react";
 import { GlassNavbar, IconLink } from "@/components/glass/navigation";
 import { EmptyState, GlassBadge, GlassCard, GlassRing, SectionHeader } from "@/components/glass/primitives";
@@ -16,8 +17,12 @@ import type { PlayerCardRow } from "@/lib/types";
 
 export const metadata = { title: "Inicio" };
 
+/** Match de los últimos 3 días: se marca como "nuevo". */
+const isRecent = (iso: string) => Date.now() - new Date(iso).getTime() < 3 * 864e5;
+
 export default async function HomePage() {
   const session = await requireApp();
+  if (!session.player && !session.activeOrg && session.roles.includes("guardian")) redirect("/guardian");
   return appMode(session) === "organization" ? <OrgHome session={session} /> : <PlayerHome session={session} />;
 }
 
@@ -130,7 +135,7 @@ async function PlayerHome({ session }: { session: Session }) {
                 const convId = Array.isArray(conv) ? conv[0]?.id : conv?.id;
                 return (
                   <GlassMatchCard key={m.id} id={org.id} name={org.name} imageUrl={publicAssetUrl(org.crest_path)} subtitle={org.city ?? undefined}
-                    href={convId ? `/chats/${convId}` : `/clubs/${org.id}`} isNew={Date.now() - new Date(m.created_at).getTime() < 3 * 864e5} />
+                    href={convId ? `/chats/${convId}` : `/clubs/${org.id}`} isNew={isRecent(m.created_at)} />
                 );
               })}
             </div>
@@ -267,7 +272,7 @@ async function OrgHome({ session }: { session: Session }) {
                 return (
                   <GlassMatchCard key={m.id} id={m.player_id} name={p?.display_name ?? "—"} imageUrl={p?.avatar_path ? signed[p.avatar_path] : null}
                     subtitle={p ? t(`football.pos.${p.position}`) : undefined} href={convId ? `/chats/${convId}` : `/players/${m.player_id}`}
-                    isNew={Date.now() - new Date(m.created_at).getTime() < 3 * 864e5} />
+                    isNew={isRecent(m.created_at)} />
                 );
               })}
             </div>

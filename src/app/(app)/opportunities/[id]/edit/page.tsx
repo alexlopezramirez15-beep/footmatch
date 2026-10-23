@@ -18,6 +18,7 @@ export default async function EditOpportunityPage(props: PageProps<"/opportuniti
   const m = session.memberships.find((x) => x.organization.id === opp.row.organization_id);
   if (!m || m.role === "scout") redirect(`/opportunities/${id}`);
   const { t } = await getI18n();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { organization: _o, ...initial } = opp.raw;
   return (
     <>

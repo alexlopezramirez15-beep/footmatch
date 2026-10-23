@@ -9,7 +9,7 @@ export default async function OnboardingLayout({ children }: LayoutProps<"/onboa
       <div className="mb-6 flex items-center justify-between">
         <Link href="/onboarding"><Logo size={28} /></Link>
         <form action="/auth/signout" method="post">
-          <button className="text-sm font-medium text-ink-2 hover:text-ink">↩</button>
+          <button aria-label="Cerrar sesión" className="text-sm font-medium text-ink-2 hover:text-ink">↩</button>
         </form>
       </div>
       {children}

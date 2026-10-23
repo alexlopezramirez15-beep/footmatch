@@ -111,6 +111,14 @@ describe.skipIf(!URL)("RLS y reglas de negocio", () => {
     expect(o.rows[0].verification_status).toBe("verified");
   });
 
+  it("un club no puede modificar ni publicar en nombre de otra organización", async () => {
+    const upd = await as(users.club, (c) => c.query("update public.organizations set name = 'Hackeado' where id = $1", [otherOrgId]));
+    expect(upd.rowCount).toBe(0);
+    await expect(as(users.club, (c) => c.query(
+      `insert into public.opportunities(organization_id, created_by, title, positions, age_min, age_max, category) values ($1,$2,'Falsa',ARRAY['ST'],18,30,'senior')`,
+      [otherOrgId, users.club.id]))).rejects.toThrow(/row-level security/);
+  });
+
   it("un jugador no puede leer el perfil privado de otro", async () => {
     const r = await as(users.other, (c) => c.query("select * from public.profiles where id = $1", [users.player.id]));
     expect(r.rowCount).toBe(0);

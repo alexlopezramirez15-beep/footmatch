@@ -2,7 +2,7 @@ import { defineMessages } from "../define";
 
 export const common = defineMessages({
   es: {
-    save: "Guardar", saved: "Guardado", cancel: "Cancelar", continue: "Continuar", back: "Atrás", next: "Siguiente",
+    invalidData: "Datos no válidos", save: "Guardar", saved: "Guardado", cancel: "Cancelar", continue: "Continuar", back: "Atrás", next: "Siguiente",
     close: "Cerrar", edit: "Editar", delete: "Eliminar", send: "Enviar", share: "Compartir", seeAll: "Ver todo",
     loading: "Cargando…", retry: "Reintentar", search: "Buscar", filters: "Filtros", apply: "Aplicar", reset: "Restablecer",
     yes: "Sí", no: "No", optional: "Opcional", required: "Obligatorio", demo: "DEMO", demoHint: "Dato demostrativo, no real",
@@ -16,7 +16,7 @@ export const common = defineMessages({
     lightMode: "Claro", darkMode: "Oscuro", systemMode: "Sistema", reason: "Motivo", details: "Detalles",
   },
   en: {
-    save: "Save", saved: "Saved", cancel: "Cancel", continue: "Continue", back: "Back", next: "Next",
+    invalidData: "Invalid data", save: "Save", saved: "Saved", cancel: "Cancel", continue: "Continue", back: "Back", next: "Next",
     close: "Close", edit: "Edit", delete: "Delete", send: "Send", share: "Share", seeAll: "See all",
     loading: "Loading…", retry: "Retry", search: "Search", filters: "Filters", apply: "Apply", reset: "Reset",
     yes: "Yes", no: "No", optional: "Optional", required: "Required", demo: "DEMO", demoHint: "Demo data, not real",
@@ -30,7 +30,7 @@ export const common = defineMessages({
     lightMode: "Light", darkMode: "Dark", systemMode: "System", reason: "Reason", details: "Details",
   },
   ca: {
-    save: "Desar", saved: "Desat", cancel: "Cancel·lar", continue: "Continuar", back: "Enrere", next: "Següent",
+    invalidData: "Dades no vàlides", save: "Desar", saved: "Desat", cancel: "Cancel·lar", continue: "Continuar", back: "Enrere", next: "Següent",
     close: "Tancar", edit: "Editar", delete: "Eliminar", send: "Enviar", share: "Compartir", seeAll: "Veure-ho tot",
     loading: "Carregant…", retry: "Tornar-ho a provar", search: "Cercar", filters: "Filtres", apply: "Aplicar", reset: "Restablir",
     yes: "Sí", no: "No", optional: "Opcional", required: "Obligatori", demo: "DEMO", demoHint: "Dada demostrativa, no real",
@@ -44,7 +44,7 @@ export const common = defineMessages({
     lightMode: "Clar", darkMode: "Fosc", systemMode: "Sistema", reason: "Motiu", details: "Detalls",
   },
   pl: {
-    save: "Zapisz", saved: "Zapisano", cancel: "Anuluj", continue: "Dalej", back: "Wstecz", next: "Dalej",
+    invalidData: "Nieprawidłowe dane", save: "Zapisz", saved: "Zapisano", cancel: "Anuluj", continue: "Dalej", back: "Wstecz", next: "Dalej",
     close: "Zamknij", edit: "Edytuj", delete: "Usuń", send: "Wyślij", share: "Udostępnij", seeAll: "Zobacz wszystko",
     loading: "Ładowanie…", retry: "Spróbuj ponownie", search: "Szukaj", filters: "Filtry", apply: "Zastosuj", reset: "Resetuj",
     yes: "Tak", no: "Nie", optional: "Opcjonalne", required: "Wymagane", demo: "DEMO", demoHint: "Dane demonstracyjne, nieprawdziwe",

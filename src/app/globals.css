@@ -228,6 +228,11 @@ body {
 @keyframes fm-drift-a { to { transform: translate3d(-6vmax, 8vmax, 0) scale(1.08); } }
 @keyframes fm-drift-b { to { transform: translate3d(8vmax, -6vmax, 0) scale(1.1); } }
 
+/* Posición por defecto en capa: así absolute/fixed/sticky de Tailwind la sustituyen. */
+@layer components {
+  .glass { position: relative; }
+}
+
 /* =====================================================================
    MATERIALES LIQUID GLASS
    .glass + modificador de material. El reflejo superior (::before) y el
@@ -238,7 +243,6 @@ body {
   --g-blur: var(--glass-blur-regular);
   --g-shadow: var(--shadow-2);
   --g-border: var(--glass-border);
-  position: relative;
   isolation: isolate;
   background:
     linear-gradient(180deg, var(--glass-highlight-soft) 0%, transparent 38%, transparent 70%, var(--glass-inner-shade) 100%),

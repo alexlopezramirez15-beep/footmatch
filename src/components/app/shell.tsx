@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSyncedState } from "@/lib/hooks";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -35,11 +36,8 @@ export function AppShell(props: ShellProps) {
   // Conversación abierta: pantalla completa sin barra de pestañas (como Mensajes de iOS)
   const immersive = /^\/chats\/[^/]+$/.test(path);
   const { push } = useToast();
-  const [unread, setUnread] = React.useState(props.unreadNotifications);
-  const [chats, setChats] = React.useState(props.unreadChats);
-
-  React.useEffect(() => setUnread(props.unreadNotifications), [props.unreadNotifications]);
-  React.useEffect(() => setChats(props.unreadChats), [props.unreadChats]);
+  const [unread, setUnread] = useSyncedState(props.unreadNotifications);
+  const [chats, setChats] = useSyncedState(props.unreadChats);
 
   // Notificaciones en tiempo real (Supabase Realtime, filtradas por RLS)
   React.useEffect(() => {
@@ -65,7 +63,7 @@ export function AppShell(props: ShellProps) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [props.userId, push, router]);
+  }, [props.userId, push, router, setChats, setUnread]);
 
   const org = props.mode === "organization";
   const primary: NavItem[] = [

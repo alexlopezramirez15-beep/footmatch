@@ -6,12 +6,8 @@ import { AnimatePresence, motion, useReducedMotion, type PanInfo } from "motion/
 import { CheckCircle2, Info, TriangleAlert, X, XCircle } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { springSheet } from "./tokens";
+import { useMounted } from "@/lib/hooks";
 
-function useMounted() {
-  const [m, setM] = React.useState(false);
-  React.useEffect(() => setM(true), []);
-  return m;
-}
 
 /** Bloquea el scroll del body y gestiona Escape + foco inicial / devolución de foco. */
 function useOverlayBehaviour(open: boolean, onClose: () => void, panel: React.RefObject<HTMLElement | null>) {

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useOnChange, useSyncedState } from "@/lib/hooks";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "motion/react";
@@ -50,12 +51,11 @@ export function PipelineBoard({
   const router = useRouter();
   const params = useSearchParams();
   const { push } = useToast();
-  const [cards, setCards] = React.useState(initial);
+  const [cards, setCards] = useSyncedState(initial);
   const [open, setOpen] = React.useState<PipelineCard | null>(null);
   const [tab, setTab] = React.useState<Status>((params.get("status") as Status) || "received");
   const [dragging, setDragging] = React.useState<string | null>(null);
   const [over, setOver] = React.useState<Status | null>(null);
-  React.useEffect(() => setCards(initial), [initial]);
 
   const byStatus = React.useMemo(() => {
     const m = new Map<string, PipelineCard[]>();
@@ -207,9 +207,11 @@ function ApplicantSheet({
   const [note, setNote] = React.useState("");
   const [pending, start] = React.useTransition();
 
-  React.useEffect(() => {
+  useOnChange(card?.id, () => {
     setDetail(null);
     setNote("");
+  });
+  React.useEffect(() => {
     if (!card) return;
     let alive = true;
     applicationDetailAction(card.id).then((r) => { if (alive && r.ok) setDetail(r.data!); });

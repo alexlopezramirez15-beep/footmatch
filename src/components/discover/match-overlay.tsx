@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useMounted } from "@/lib/hooks";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -30,8 +31,7 @@ export function MatchOverlay({ data, onClose }: { data: MatchOverlayData | null;
   const { t } = useI18n();
   const self = useSelf();
   const reduce = useReducedMotion();
-  const [mounted, setMounted] = React.useState(false);
-  React.useEffect(() => setMounted(true), []);
+  const mounted = useMounted();
   React.useEffect(() => {
     if (!data) return;
     haptic("match");
